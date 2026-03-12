@@ -1,27 +1,28 @@
-name: 'statix-action'
-description: 'Lint Nix code, and optionally create a pull request'
+---
+name: "statix-action"
+description: "Lint Nix code, and optionally create a pull request"
 inputs:
   action:
-    description: 'statix action'
+    description: "statix action"
     required: false
-    default: 'check'
+    default: "check"
   directory:
-    description: 'Directory on which to run statix'
+    description: "Directory on which to run statix"
     required: false
-    default: '.'
+    default: "."
   create_pr:
-    description: 'Whether to create a PR'
+    description: "Whether to create a PR"
     required: false
-    default: 'false'
+    default: "false"
   commit_message:
-    description: 'Commit message'
+    description: "Commit message"
     required: false
-    default: 'Lint Nix code'
+    default: "Lint Nix code"
 runs:
   using: "composite"
   steps:
     - name: Lint Nix code
-      run: 'nix run nixpkgs#statix -- ${{ inputs.action }} ${{ inputs.directory }}'
+      run: "nix run git+https://github.com/molybdenumsoftware/statix -- ${{ inputs.action }} ${{ inputs.directory }}"
       shell: bash
       id: statix
     - name: Create PR
@@ -33,7 +34,7 @@ runs:
         title: "${{ inputs.commit_message }}"
         commit-message: "${{ inputs.commit_message }}"
         body: |
-          Automated linting performed by the [statix-action](https://github.com/jocelynthode/statix-action) GitHub Action.
+          Automated linting performed by the [statix-action](https://github.com/Elbtalkessel/statix-action) GitHub Action.
 branding:
-    icon: 'check-circle'
-    color: 'green'
+  icon: "check-circle"
+  color: "green"
